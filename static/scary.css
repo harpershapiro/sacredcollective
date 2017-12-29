@@ -10,3 +10,8 @@ html {
 h1 {
   background-color: red;
 }
+
+a:-webkit-any-link {
+  color: initial;
+  text-decoration: none;
+}

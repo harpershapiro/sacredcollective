@@ -8,9 +8,10 @@ def index():
 
 @app.route('/artist/<artist>')
 def artistPage(artist):
-    return render_template("artistPage.html", artist=artist)
+    examplePortfolio = ["artOne", "artTwo", "artThree"]
+    return render_template("artistPage.html", artist=artist, portfolio=examplePortfolio)
 
-
+#this method forces proper front-end updates
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
