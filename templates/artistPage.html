@@ -1,10 +1,14 @@
 <!doctype html>
-<h1>{{ artist }}</h1>
+<link rel="stylesheet" href="/static/scary.css?q=1280549780"
+  type="text/css" media="screen" charset="utf-8" />
+<div align="middle" class="container">
+<h2>{{ artist }}</h2>
 
 <ul>
 
   {% for item in portfolio %}
-    <li>{{ item }}</li>
+  <li>{{ item }}</li>
   {% endfor %}
 
 </ul>
+</div>
