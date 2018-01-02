@@ -7,10 +7,10 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/artist/<artist>')
-def artistPage(artist):
-    examplePortfolio = ["artOne", "artTwo", "artThree"]
-    return render_template("artistPage.html", artist=artist, portfolio=examplePortfolio)
+@app.route('/artist/sacredhumanbeings')
+def artistPage():
+    examplePortfolio = { "a":"1.JPG", "b":"2.jpg", "c":"3.jpg"}
+    return render_template("artistPage.html",artist="Sacred Human Beings", portfolio=examplePortfolio)
 
 #this method forces proper front-end updates
 @app.context_processor
