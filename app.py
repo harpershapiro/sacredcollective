@@ -1,16 +1,43 @@
 import os
 from flask import Flask, request, render_template
 
+id_Counter = 0
+
 app = Flask(__name__)
+
+class Post:
+    def __init__(self, cont, content_link, b_txt):
+        # bandcamp player or other content
+        self.content    = cont
+        # following text
+        self.body_text  = b_txt
+        self.content_url = content_link
+        self.id = id_Counter
+        global id_Counter 
+        id_Counter += 1 
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
 @app.route('/artist/sacredhumanbeings')
-def artistPage():
-    examplePortfolio = { "a":"1.JPG", "b":"2.jpg", "c":"3.jpg"}
-    return render_template("artistPage.html",artist="Sacred Human Beings", portfolio=examplePortfolio)
+def shb_artistPage():
+    # examplePortfolio = ["sosacred/1.JPG", "sosacred/2.jpg", "sosacred/3.jpg"]
+    posts = []
+    posts.append(Post( 
+            "https://bandcamp.com/EmbeddedPlayer/album=3809564303/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/",
+            "http://sacredhumanbeings.bandcamp.com/album/holy-places",
+            "some text about this project",
+
+            ))
+    return render_template("artistPage.html", artist="Sacred Human Beings", portfolio=posts)
+
+@app.route('/artist/bennetbadactor')
+def bba_artistPage():
+    examplePortfolio = ["brocolli/1.JPG", "brocolli/2.jpg", "brocolli/3.jpg", "brocolli/4.jpg"]
+    return render_template("artistPage.html",
+        artist="Bennet Bad Actor", 
+        portfolio=examplePortfolio)
 
 #this method forces proper front-end updates
 @app.context_processor

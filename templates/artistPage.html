@@ -1,13 +1,21 @@
 <!doctype html>
 <link rel="stylesheet" href="/static/scary.css?q=1280549780"
   type="text/css" media="screen" charset="utf-8" />
-<div align="middle" class="container">
-<h2>{{ artist }}</h2>
 
+<div align="middle" class="container">
+<div id="headersurround"><h2>{{ artist }}</h2></div>
 <ul>
 
   {% for item in portfolio %}
-  <img src="../static/images/{{ portfolio[item] }}"><br>
+    <p><iframe style="border: 0; width: 350px; height: 470px;" 
+        src={{ item.content }} seamless onload="document.getElementById({{ item.id }}).style.display = 'block'">
+        <a href={{ item.content_url }} >holy places by Sacred Human Beings</a>
+    </iframe>
+    </p>
+    <p style="display: none" class="body_text" id="{{ item.id }}">
+        {{ item.body_text }}
+    </p>
+        <br>
   {% endfor %}
 
 </ul>

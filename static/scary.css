@@ -16,9 +16,15 @@ a:-webkit-any-link {
   text-decoration: none;
 }
 
-div.container {
-  max-width: 70%;
+.body_text {
+  font-family: Helvetica;
+  font-size: 14px;
+}
+
+.container {
+  max-width: 60%;
   margin: auto;
+  position: relative;
 }
 
 ul {
