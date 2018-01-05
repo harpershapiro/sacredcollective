@@ -5,7 +5,10 @@
 
 html {
   font: 50px SomethingStrange;
+  background-image: url("images/bg.jpg");
+  background-repeat: round;
 }
+
 
 h1 {
   background-color: red;
