@@ -6,15 +6,52 @@ id_Counter = 0
 app = Flask(__name__)
 
 class Post:
-    def __init__(self, cont, content_link, b_txt):
+    def __init__(self, cont, b_txt):
         # bandcamp player or other content
-        self.content    = cont
+        self._content    = cont
         # following text
-        self.body_text  = b_txt
-        self.content_url = content_link
-        self.id = id_Counter
+        self._body_text  = b_txt
+        # self.content_url = content_link
+        self._id = id_Counter
         global id_Counter 
-        id_Counter += 1 
+        id_Counter += 1
+
+    # def render_content(self):
+    #     return self.content
+
+    def render_body_text(self):
+        return self._body_text
+
+
+class AlbumPost(Post):
+    def __init__(self, iframe_str, bcmp_link_str, b_txt):
+        self._iframe_str = iframe_str
+        self._bcmp_link_str = bcmp_link_str
+        self._body_text = b_txt
+        self._content = ""
+        self._id = id_Counter
+        global id_Counter 
+        id_Counter += 1
+
+    def render_content(self):
+        # 0: content
+        # 1: id
+        # 2: album url on bandcamp
+        self._content = """<iframe style="border: 0; width: 600px; height: 600px;" 
+            src={0} seamless onload="document.getElementById({1}).style.display = 'block'">
+            <a href={2} >holy places by Sacred Human Beings</a>
+            </iframe>""".format(self._iframe_str, self._id, self._bcmp_link_str)
+        
+        return self._content
+
+class ArtPost(Post):
+    def __init__(self, img_src, b_text):
+        self._img_src = img_src
+        self._body_text = b_text
+
+    def render_content(self):
+        self._content = "<img src=\"{0}\">".format(self._img_src)
+        return self._content
 
 @app.route('/')
 def index():
@@ -23,20 +60,33 @@ def index():
 @app.route('/artist/sacredhumanbeings')
 def shb_artistPage():
     # examplePortfolio = ["sosacred/1.JPG", "sosacred/2.jpg", "sosacred/3.jpg"]
-    posts = []
-    posts.append(Post( 
-            "https://bandcamp.com/EmbeddedPlayer/album=3809564303/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/",
-            "http://sacredhumanbeings.bandcamp.com/album/holy-places",
-            "some text about this project",
+    posts = []    
 
-            ))
+    posts.append(AlbumPost( 
+           "https://bandcamp.com/EmbeddedPlayer/album=3809564303/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/",
+           "http://sacredhumanbeings.bandcamp.com/album/holy-places",
+           "Some text about this project. "
+           ))
+
+    posts.append(ArtPost("../static/images/sosacred/1.JPG", "img 001"))
+    posts.append(ArtPost("../static/images/sosacred/2.JPG", "img 002"))
+    posts.append(ArtPost("../static/images/sosacred/3.JPG", "img 003"))
+
     return render_template("artistPage.html", artist="Sacred Human Beings", portfolio=posts)
 
 @app.route('/artist/bennetbadactor')
 def bba_artistPage():
     examplePortfolio = ["brocolli/1.JPG", "brocolli/2.jpg", "brocolli/3.jpg", "brocolli/4.jpg"]
+    posts = [ArtPost("../static/images/" + x, " img :) ") for x in examplePortfolio]
     return render_template("artistPage.html",
         artist="Bennet Bad Actor", 
+        portfolio=posts)
+
+@app.route('/artist/thickbrick')
+def tb_artistPage():
+    examplePortfolio = ["brocolli/1.JPG", "brocolli/2.jpg", "brocolli/3.jpg", "brocolli/4.jpg"]
+    return render_template("artistPage.html",
+        artist="Thick Brick", 
         portfolio=examplePortfolio)
 
 #this method forces proper front-end updates

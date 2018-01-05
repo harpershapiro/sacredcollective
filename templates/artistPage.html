@@ -5,18 +5,12 @@
 <div align="middle" class="container">
 <div id="headersurround"><h2>{{ artist }}</h2></div>
 <ul>
-
-  {% for item in portfolio %}
-    <p><iframe style="border: 0; width: 350px; height: 470px;" 
-        src={{ item.content }} seamless onload="document.getElementById({{ item.id }}).style.display = 'block'">
-        <a href={{ item.content_url }} >holy places by Sacred Human Beings</a>
-    </iframe>
+    {% for item in portfolio %}
+        {{ item.render_content()|safe }}
+    <p style="display: block" class="body_text" id="{{ item.id }}">
+        {{ item.render_body_text() }}
     </p>
-    <p style="display: none" class="body_text" id="{{ item.id }}">
-        {{ item.body_text }}
-    </p>
-        <br>
-  {% endfor %}
+    {% endfor %}
 
 </ul>
 </div>
